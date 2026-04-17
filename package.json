@@ -50,7 +50,9 @@
         },
         "testFileDimmer.patterns": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [
             "**/*_test.py",
             "**/*.test.{js,jsx,ts,tsx,mjs,cjs}",
@@ -74,7 +76,9 @@
         },
         "testFileDimmer.excludePatterns": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "default": [],
           "description": "Glob patterns to exclude from decoration, even if they match testFileDimmer.patterns."
         },
@@ -124,13 +128,19 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "package": "vsce package"
+    "package": "vsce package",
+    "release": "./scripts/publish.sh",
+    "release:patch": "./scripts/publish.sh patch",
+    "release:minor": "./scripts/publish.sh minor",
+    "release:major": "./scripts/publish.sh major",
+    "release:dry": "./scripts/publish.sh --dry-run"
   },
   "devDependencies": {
     "@types/node": "^18.19.0",
     "@types/vscode": "^1.80.0",
-    "typescript": "^5.3.0",
-    "@vscode/vsce": "^2.24.0"
+    "@vscode/vsce": "^2.24.0",
+    "ovsx": "^0.10.0",
+    "typescript": "^5.3.0"
   },
   "dependencies": {
     "minimatch": "^9.0.3"
