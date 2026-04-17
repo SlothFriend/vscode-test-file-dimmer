@@ -128,7 +128,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "package": "vsce package"
+    "package": "just package"
   },
   "devDependencies": {
     "@types/node": "^18.19.0",
