@@ -3,7 +3,7 @@
   "displayName": "Test File Dimmer",
   "description": "Dim test files and add a badge in the Explorer so source files visually pop. Works with Python, JS/TS, Go, Ruby, Rust, Java, and more.",
   "version": "0.1.0",
-  "publisher": "sloth-friend",
+  "publisher": "david-clark-314",
   "license": "MIT",
   "icon": "icon.png",
   "engines": {
