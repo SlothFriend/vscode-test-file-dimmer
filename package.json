@@ -1,0 +1,138 @@
+{
+  "name": "test-file-dimmer",
+  "displayName": "Test File Dimmer",
+  "description": "Dim test files and add a badge in the Explorer so source files visually pop. Works with Python, JS/TS, Go, Ruby, Rust, Java, and more.",
+  "version": "0.1.0",
+  "publisher": "sloth-friend",
+  "license": "MIT",
+  "icon": "icon.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "test",
+    "explorer",
+    "file decoration",
+    "pytest",
+    "jest",
+    "testing",
+    "dim",
+    "badge"
+  ],
+  "galleryBanner": {
+    "color": "#1e1e1e",
+    "theme": "dark"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SlothFriend/vscode-test-file-dimmer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SlothFriend/vscode-test-file-dimmer/issues"
+  },
+  "homepage": "https://github.com/SlothFriend/vscode-test-file-dimmer#readme",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Test File Dimmer",
+      "properties": {
+        "testFileDimmer.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable or disable test file decorations."
+        },
+        "testFileDimmer.patterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [
+            "**/*_test.py",
+            "**/*.test.{js,jsx,ts,tsx,mjs,cjs}",
+            "**/*.spec.{js,jsx,ts,tsx,mjs,cjs}",
+            "**/*_test.go",
+            "**/*_spec.rb",
+            "**/*_test.rb",
+            "**/*Test.java",
+            "**/*Tests.java",
+            "**/*Test.kt",
+            "**/*Tests.kt",
+            "**/*Tests.cs",
+            "**/*Test.cs",
+            "**/*Test.php",
+            "**/*Tests.swift",
+            "**/*Spec.groovy",
+            "**/*_test.{c,cc,cpp,cxx,h,hpp}",
+            "**/*_tests.{c,cc,cpp,cxx,h,hpp}"
+          ],
+          "description": "Glob patterns (relative to workspace root) that identify test files. Defaults only match suffix-style test filenames (e.g. foo_test.py, foo.test.ts) so that non-test files living inside test directories aren't dimmed. Supports standard glob syntax with ** wildcards."
+        },
+        "testFileDimmer.excludePatterns": {
+          "type": "array",
+          "items": { "type": "string" },
+          "default": [],
+          "description": "Glob patterns to exclude from decoration, even if they match testFileDimmer.patterns."
+        },
+        "testFileDimmer.badge": {
+          "type": "string",
+          "default": "T",
+          "maxLength": 2,
+          "description": "Badge text shown next to test files in the Explorer (max 2 characters). Set to empty string to hide the badge."
+        },
+        "testFileDimmer.tooltip": {
+          "type": "string",
+          "default": "Test file",
+          "description": "Tooltip shown when hovering over a decorated file."
+        },
+        "testFileDimmer.propagateToFolders": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, folders containing only test files will also be decorated."
+        }
+      }
+    },
+    "colors": [
+      {
+        "id": "testFileDimmer.foreground",
+        "description": "Color applied to test file names in the Explorer. Override in workbench.colorCustomizations to change it.",
+        "defaults": {
+          "dark": "#7f7f7f",
+          "light": "#a0a0a0",
+          "highContrast": "#a0a0a0",
+          "highContrastLight": "#707070"
+        }
+      }
+    ],
+    "commands": [
+      {
+        "command": "testFileDimmer.toggle",
+        "title": "Test File Dimmer: Toggle Decorations"
+      },
+      {
+        "command": "testFileDimmer.refresh",
+        "title": "Test File Dimmer: Refresh Decorations"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.0",
+    "@types/vscode": "^1.80.0",
+    "typescript": "^5.3.0",
+    "@vscode/vsce": "^2.24.0"
+  },
+  "dependencies": {
+    "minimatch": "^9.0.3"
+  }
+}
