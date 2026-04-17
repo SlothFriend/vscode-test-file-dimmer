@@ -128,12 +128,7 @@
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "lint": "eslint src --ext ts",
-    "package": "vsce package",
-    "release": "./scripts/publish.sh",
-    "release:patch": "./scripts/publish.sh patch",
-    "release:minor": "./scripts/publish.sh minor",
-    "release:major": "./scripts/publish.sh major",
-    "release:dry": "./scripts/publish.sh --dry-run"
+    "package": "vsce package"
   },
   "devDependencies": {
     "@types/node": "^18.19.0",

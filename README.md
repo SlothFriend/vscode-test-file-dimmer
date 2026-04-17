@@ -113,7 +113,7 @@ npm run compile
 To produce a `.vsix` you can install locally:
 
 ```bash
-npm run package
+just package
 ```
 
 You can install the resulting `.vsix` into VS Code or Cursor via
@@ -129,6 +129,9 @@ VS Code-derived editors (Cursor, VSCodium, etc.) can discover it:
 - **Open VSX** (<https://open-vsx.org>) — used by Cursor, VSCodium, Gitpod,
   and most other forks.
 
+Release tasks are driven by [`just`](https://github.com/casey/just). Install
+it with `brew install just` (or see the project's install docs).
+
 ### One-time setup
 
 1. Create a publisher on the VS Code Marketplace at
@@ -138,7 +141,7 @@ VS Code-derived editors (Cursor, VSCodium, etc.) can discover it:
    (Organization: *All accessible organizations*, Scope: *Marketplace → Manage*).
 3. Claim the matching namespace on <https://open-vsx.org> and generate an
    access token at <https://open-vsx.org/user-settings/tokens>.
-4. Export both tokens in your shell (consider adding these to a password
+4. Export both tokens in your shell (consider storing them in a password
    manager rather than your shell rc file):
 
    ```bash
@@ -148,31 +151,27 @@ VS Code-derived editors (Cursor, VSCodium, etc.) can discover it:
 
 ### Shipping a release
 
+Two steps — bump the version (which handles the git commit + tag + push),
+then publish to both marketplaces:
+
 ```bash
-# Publish the current version in package.json
-npm run release
+# 1. Update CHANGELOG.md, commit, and push it.
+# 2. Bump the version: creates `Release vX.Y.Z` commit + annotated tag,
+#    and pushes both to origin.
+just bump patch      # 0.1.0 -> 0.1.1
+just bump minor      # 0.1.0 -> 0.2.0
+just bump major      # 0.1.0 -> 1.0.0
+just bump 1.2.3      # explicit version
 
-# Or bump the version first
-npm run release:patch   # 0.1.0 -> 0.1.1
-npm run release:minor   # 0.1.0 -> 0.2.0
-npm run release:major   # 0.1.0 -> 1.0.0
-
-# Dry run: package only, no publishing or git changes
-npm run release:dry
+# 3. Publish to both marketplaces.
+just publish
 ```
 
-The release script (`scripts/publish.sh`):
+`just publish` reads the version from `package.json`, builds one `.vsix`,
+and ships it to both marketplaces. It refuses to run if the working tree is
+dirty or if either token env var is missing.
 
-1. Verifies the working tree is clean and you're on `main`.
-2. Optionally bumps the version and commits the bump as `Release vX.Y.Z`.
-3. Builds a single `.vsix`.
-4. Publishes that `.vsix` to both marketplaces.
-5. Creates and pushes a `vX.Y.Z` git tag.
-
-Flags for partial runs: `--skip-vsce`, `--skip-ovsx`, `--skip-tag`,
-`--skip-push`, `--dry-run`.
-
-Remember to update `CHANGELOG.md` before shipping a new version.
+To see all recipes: `just` (or `just --list`).
 
 ## Known limitations
 
